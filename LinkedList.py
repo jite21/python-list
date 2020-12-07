@@ -2,11 +2,12 @@
 """
 Spyder Editor
 
-This py file has LinkedList, queue, stack and graph Implementation
+This py file has LinkedList, queue, stack and graph (BFS and DFS traversal) Implementation
 1. Iterable
 2. Magic/Dunder functions in python
-3. Tree implementation.
-4. BFS, DFS implementation
+3. Custom Exception, try-except and raise Exception.
+4. Duck typing and EAFP
+5. Python inheritence
 """
 
 class IndexNotFoundException(Exception):
@@ -193,79 +194,48 @@ class LinkedList:
         self._len -= 1
                    
             
-class MyQueue:
+class MyQueue(LinkedList):
     '''This is queue Implementation : FIFO'''
 
     def __init__(self):
-        self._l = LinkedList()
-        pass
+        super().__init__()
     
     def add(self,value):
-        self._l.additem(value)
+        super().additem(value)
         
     def top(self):
-        return self._l[0]
+        return super().__getitem__(0)
         
     def remove(self):
         try:
-            del self._l[0]
+            super().__delitem__(0)
         except IndexNotFoundException:
             print('Queue Empty')
         except Exception as e:
             print(str(e))
-        
-    def __str__(self):
-        return str(self._l)
-    
-    def length(self):
-        return len(self._l)
-    
-    def __len__(self):
-        return self.length()
-    
-    def __iter__(self):
-        return self._l.__iter__()
-    
-    def __next__(self):
-        return self._l.__next__()
     
         
-class MyStack:
+class MyStack(LinkedList):
     '''This is a Stack Implementation : LIFO'''
 
     def __init__(self):
-        self._l = LinkedList()
-        pass
+        super().__init__()
     
     def add(self,value):
-        self._l.additem(value)
+        super().additem(value)
         
     def top(self):
-        return self._l[-1]
+        return super().__getitem__(-1)
         
     def remove(self):
         try:
-            del self._l[-1]
+            super().__delitem__(-1)
         except IndexNotFoundException:
             print('Queue Empty')
         except Exception as e:
             print(str(e))
-        
-    def __str__(self):
-        return str(self._l)
-    
-    def length(self):
-        return len(self._l)
-    
-    def __len__(self):
-        return self.length()
-    
-    def __iter__(self):
-        return self._l.__iter__()
-    
-    def __next__(self):
-        return self._l.__next__()
-    
+
+
 class MyBasicGraph():
     '''Tree Implementation this is 0 based index so '0' will be the root'''
     
@@ -297,6 +267,7 @@ class MyBasicGraph():
             s += '\n'
                
         return s
+
 
 class GraphTraversal:
     '''BFS and DFS tree traversal'''
@@ -349,6 +320,8 @@ if __name__ == '__main__':
     print('value in queue : ',q)
     
     g = MyBasicGraph(6)
+    # In addedge first argument is from Vertex and rest are to
+    # So here there is a edge from 0 to 1,2,5 :: 0 -> 1 2 5
     g.addedge(0,1,2,5)
     g.addedge(1,3,5)
     g.addedge(2,4)
